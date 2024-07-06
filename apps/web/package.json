@@ -5,6 +5,7 @@
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
+    "@pandacss/dev": "^0.41.0",
     "vite": "^5.3.3"
   }
 }
