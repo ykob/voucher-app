@@ -1,11 +1,22 @@
 {
   "name": "web",
+  "type": "module",
   "scripts": {
-    "build": "vite build",
+    "build": "npx remix vite:build",
+    "dev": "npx remix-serve build/server/index.js",
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
     "@pandacss/dev": "^0.41.0",
+    "@remix-run/dev": "^2.10.2",
     "vite": "^5.3.3"
+  },
+  "dependencies": {
+    "@remix-run/node": "^2.10.2",
+    "@remix-run/react": "^2.10.2",
+    "@remix-run/serve": "^2.10.2",
+    "isbot": "4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }
