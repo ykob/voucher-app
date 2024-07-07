@@ -3,4 +3,14 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [remix()],
+  resolve: {
+    alias: {
+      "~": `${__dirname}/app/`,
+      "styled-system": `${__dirname}/styled-system/`,
+    },
+  },
+  server: {
+    host: true,
+    port: 3000,
+  },
 });
