@@ -4,8 +4,11 @@
     "build": {
       "outputs": ["dist/**"]
     },
-    "check-types": {
-      "dependsOn": ["^check-types"]
+    "db:generate": {
+      "cache": false
+    },
+    "db:push": {
+      "cache": false
     },
     "dev": {
       "persistent": true,
