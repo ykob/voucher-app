@@ -1,8 +1,8 @@
 {
   "name": "db",
   "scripts": {
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push --skip-generate"
+    "generate": "prisma generate",
+    "push": "prisma db push --skip-generate"
   },
   "devDependencies": {
     "prisma": "^5.16.1"
