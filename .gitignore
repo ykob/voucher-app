@@ -1,3 +1,5 @@
+
+.env
 .turbo
 build/
 node_modules/
