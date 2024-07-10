@@ -6,3 +6,45 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Estimate {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  amount    Float
+  taxAmount Float
+  lines     EstimateLine[]
+}
+
+model EstimateLine {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  amount    Float
+  taxAmount Float
+  estimate  Estimate @relation(fields: [estimateId], references: [id])
+  estimateId String
+}
+
+model Invoice {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  amount    Float
+  taxAmount Float
+  lines     InvoiceLine[]
+}
+
+model InvoiceLine {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  amount    Float
+  taxAmount Float
+  invoice   Invoice @relation(fields: [invoiceId], references: [id])
+  invoiceId String
+}
