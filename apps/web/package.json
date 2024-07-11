@@ -6,13 +6,14 @@
     "dev": "remix vite:dev",
     "build": "remix vite:build",
     "start": "remix-serve ./build/server/index.js",
-    "check-types": "tsc --noEmit"
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@pandacss/dev": "^0.41.0",
     "@remix-run/dev": "^2.10.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "eslint-config": "workspace:*",
     "vite": "^5.3.3"
   },
   "dependencies": {
