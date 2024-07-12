@@ -48,3 +48,24 @@ model InvoiceLine {
   invoice   Invoice @relation(fields: [invoiceId], references: [id])
   invoiceId String
 }
+
+model User {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  email     String   @unique
+  password  String
+  profile   UserProfile?
+}
+
+model UserProfile {
+  id          String   @id @default(cuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  firstName   String
+  lastName    String
+  address     String
+  bankAccount String
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @unique
+}
