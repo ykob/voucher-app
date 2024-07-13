@@ -9,7 +9,8 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
-    "tsx": "^4.7.1",
-    "db": "*"
+    "db": "workspace:*",
+    "eslint-config": "workspace:*",
+    "tsx": "^4.7.1"
   }
 }
