@@ -8,34 +8,51 @@ datasource db {
 }
 
 model Estimate {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String         @id @default(cuid())
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
   title     String
-  amount    Float
+  issueDate DateTime
+  expires   DateTime
+  subtotal  Float
   taxAmount Float
+  total     Float
   lines     EstimateLine[]
+  client    Client         @relation(fields: [clientId], references: [id])
+  clientId  String
+  staff     ClientStaff[]
+  staffId   String
 }
 
 model EstimateLine {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String
-  amount    Float
-  taxAmount Float
-  estimate  Estimate @relation(fields: [estimateId], references: [id])
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  title      String
+  unitPrice  Float
+  unit       String
+  subtotal   Float
+  taxAmount  Float
+  estimate   Estimate @relation(fields: [estimateId], references: [id])
   estimateId String
 }
 
 model Invoice {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String
-  amount    Float
-  taxAmount Float
-  lines     InvoiceLine[]
+  id          String        @id @default(cuid())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  title       String
+  issueDate   DateTime
+  dueDate     DateTime
+  subtotal    Float
+  taxAmount   Float
+  total       Float
+  bankAccount String
+  lines       InvoiceLine[]
+  client      Client        @relation(fields: [clientId], references: [id])
+  clientId    String
+  staff       ClientStaff[]
+  staffId     String
 }
 
 model InvoiceLine {
@@ -43,17 +60,42 @@ model InvoiceLine {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title     String
-  amount    Float
+  unitPrice Float
+  unit      String
+  subtotal  Float
   taxAmount Float
-  invoice   Invoice @relation(fields: [invoiceId], references: [id])
+  invoice   Invoice  @relation(fields: [invoiceId], references: [id])
   invoiceId String
 }
 
+model Client {
+  id        String        @id @default(cuid())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  name      String
+  email     String
+  address   String
+  estimates Estimate[]
+  invoices  Invoice[]
+  staff     ClientStaff[]
+}
+
+model ClientStaff {
+  id        String     @id @default(cuid())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  balance   Float
+  client    Client     @relation(fields: [clientId], references: [id])
+  clientId  String     @unique
+  estimates Estimate[]
+  invoices  Invoice[]
+}
+
 model User {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  email     String   @unique
+  id        String       @id @default(cuid())
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  email     String       @unique
   password  String
   profile   UserProfile?
 }
