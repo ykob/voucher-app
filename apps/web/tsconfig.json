@@ -1,16 +1,7 @@
 {
-  "include": [
-    "env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "styled-system"
-  ],
+  "include": ["env.d.ts", "**/*.ts", "**/*.tsx", "styled-system"],
   "compilerOptions": {
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ES2022"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
@@ -22,12 +13,8 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "./app/*"
-      ],
-      "styled-system/*": [
-        "./styled-system/*"
-      ]
+      "~/*": ["./app/*"],
+      "styled-system/*": ["./styled-system/*"]
     },
     "skipLibCheck": true,
     // Remix takes care of building everything in `remix build`.
