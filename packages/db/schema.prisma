@@ -11,6 +11,7 @@ model Estimate {
   id        String         @id @default(cuid())
   createdAt DateTime       @default(now())
   updatedAt DateTime       @updatedAt
+  userId    String
   title     String
   issueDate DateTime
   expires   DateTime
@@ -28,6 +29,7 @@ model EstimateLine {
   id         String   @id @default(cuid())
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  userId     String
   title      String
   unitPrice  Float
   unit       String
@@ -41,6 +43,7 @@ model Invoice {
   id          String        @id @default(cuid())
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+  userId      String
   title       String
   issueDate   DateTime
   dueDate     DateTime
@@ -59,6 +62,7 @@ model InvoiceLine {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  userId    String
   title     String
   unitPrice Float
   unit      String
@@ -72,6 +76,7 @@ model Client {
   id        String        @id @default(cuid())
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
+  userId    String
   name      String
   email     String
   address   String
@@ -84,6 +89,7 @@ model ClientStaff {
   id        String     @id @default(cuid())
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  userId    String
   balance   Float
   client    Client     @relation(fields: [clientId], references: [id])
   clientId  String     @unique
