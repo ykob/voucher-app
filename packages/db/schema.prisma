@@ -11,7 +11,8 @@ model Estimate {
   id        String         @id @default(cuid())
   createdAt DateTime       @default(now())
   updatedAt DateTime       @updatedAt
-  userId    String
+  userId    String         @unique
+  user      User           @relation(fields: [userId], references: [id])
   title     String
   issueDate DateTime
   expires   DateTime
@@ -29,7 +30,8 @@ model EstimateLine {
   id         String   @id @default(cuid())
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  userId     String
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id])
   title      String
   unitPrice  Float
   unit       String
@@ -43,7 +45,8 @@ model Invoice {
   id          String        @id @default(cuid())
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
-  userId      String
+  userId      String        @unique
+  user        User          @relation(fields: [userId], references: [id])
   title       String
   issueDate   DateTime
   dueDate     DateTime
@@ -62,7 +65,8 @@ model InvoiceLine {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  userId    String
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
   title     String
   unitPrice Float
   unit      String
@@ -76,7 +80,8 @@ model Client {
   id        String        @id @default(cuid())
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
-  userId    String
+  userId    String        @unique
+  user      User          @relation(fields: [userId], references: [id])
   name      String
   email     String
   address   String
@@ -89,7 +94,8 @@ model ClientStaff {
   id        String     @id @default(cuid())
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  userId    String
+  userId    String     @unique
+  user      User       @relation(fields: [userId], references: [id])
   balance   Float
   client    Client     @relation(fields: [clientId], references: [id])
   clientId  String     @unique
@@ -98,12 +104,18 @@ model ClientStaff {
 }
 
 model User {
-  id        String       @id @default(cuid())
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-  email     String       @unique
-  password  String
-  profile   UserProfile?
+  id           String        @id @default(cuid())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  email        String        @unique
+  password     String
+  Estimate     Estimate?
+  EstimateLine EstimateLine?
+  Invoice      Invoice?
+  InvoiceLine  InvoiceLine?
+  Client       Client?
+  ClientStaff  ClientStaff?
+  profile      UserProfile?
 }
 
 model UserProfile {
