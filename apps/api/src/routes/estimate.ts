@@ -31,22 +31,42 @@ const estimateSchema = z.object({
 });
 
 estimate.post('/', zValidator('json', estimateSchema), (c) => {
-  const data = c.req.valid('json');
+  const request = c.req.valid('json');
+  const data = prisma.estimate.create({
+    data: {
+      userId: '',
+      title: request.title,
+      issueDate: request.issueDate,
+      expires: request.expires,
+      subtotal: request.subtotal,
+      taxAmount: request.taxAmount,
+      total: request.total,
+      // lines: [],
+      clientId: request.clientId,
+      staffId: request.staffId,
+    },
+  });
 
-  return c.json(
-    prisma.estimate.create({
-      data: {
-        userId: '',
-        title: data.title,
-        issueDate: data.issueDate,
-        expires: data.expires,
-        subtotal: data.subtotal,
-        taxAmount: data.taxAmount,
-        total: data.total,
-        // lines: [],
-        clientId: data.clientId,
-        staffId: data.staffId,
-      },
-    }),
-  );
+  return c.json(data);
+});
+
+estimate.put('/:id', zValidator('json', estimateSchema), (c) => {
+  const request = c.req.valid('json');
+  const data = prisma.estimate.update({
+    where: {
+      id: c.req.param('id'),
+    },
+    data: {
+      title: request.title,
+      issueDate: request.issueDate,
+      expires: request.expires,
+      subtotal: request.subtotal,
+      taxAmount: request.taxAmount,
+      total: request.total,
+      clientId: request.clientId,
+      staffId: request.staffId,
+    },
+  });
+
+  return c.json(data);
 });
