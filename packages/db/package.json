@@ -2,7 +2,8 @@
   "name": "db",
   "scripts": {
     "generate": "prisma generate",
-    "push": "prisma db push --skip-generate"
+    "push": "prisma db push --skip-generate",
+    "gui": "prisma studio"
   },
   "devDependencies": {
     "prisma": "^5.16.1"
