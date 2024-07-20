@@ -20,6 +20,7 @@ estimate.get('/:id', (c) => {
 });
 
 const estimateSchema = z.object({
+  version: z.number(),
   title: z.string(),
   issueDate: z.date(),
   expires: z.date(),
@@ -55,6 +56,7 @@ estimate.put('/:id', zValidator('json', estimateSchema), (c) => {
   const data = prisma.estimate.update({
     where: {
       id: c.req.param('id'),
+      version: request.version,
     },
     data: {
       title: request.title,
