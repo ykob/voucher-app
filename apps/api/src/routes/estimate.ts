@@ -24,8 +24,8 @@ estimate.get('/:id', async (c) => {
 const estimateSchema = z.object({
   version: z.number(),
   title: z.string(),
-  issueDate: z.date(),
-  expires: z.date(),
+  issueDate: z.coerce.date(),
+  expires: z.coerce.date(),
   subtotal: z.number(),
   taxAmount: z.number(),
   total: z.number(),
@@ -50,6 +50,7 @@ estimate.post('/', zValidator('json', estimateSchema), async (c) => {
     },
   });
 
+  c.header('Content-type', 'application/json');
   return c.json(data);
 });
 
@@ -75,5 +76,6 @@ estimate.put('/:id', zValidator('json', estimateSchema), async (c) => {
     },
   });
 
+  c.header('Content-type', 'application/json');
   return c.json(data);
 });
