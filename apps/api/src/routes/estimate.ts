@@ -5,18 +5,20 @@ import { prisma } from '~/prisma';
 
 export const estimate = new Hono();
 
-estimate.get('/', (c) => {
-  return c.json(prisma.estimate.findMany());
+estimate.get('/', async (c) => {
+  const data = await prisma.estimate.findMany();
+
+  return c.json(data);
 });
 
-estimate.get('/:id', (c) => {
-  return c.json(
-    prisma.estimate.findUnique({
-      where: {
-        id: c.req.param('id'),
-      },
-    }),
-  );
+estimate.get('/:id', async (c) => {
+  const data = await prisma.estimate.findUnique({
+    where: {
+      id: c.req.param('id'),
+    },
+  });
+
+  return c.json(data);
 });
 
 const estimateSchema = z.object({
@@ -31,9 +33,9 @@ const estimateSchema = z.object({
   staffId: z.string(),
 });
 
-estimate.post('/', zValidator('json', estimateSchema), (c) => {
+estimate.post('/', zValidator('json', estimateSchema), async (c) => {
   const request = c.req.valid('json');
-  const data = prisma.estimate.create({
+  const data = await prisma.estimate.create({
     data: {
       userId: '',
       title: request.title,
@@ -51,14 +53,17 @@ estimate.post('/', zValidator('json', estimateSchema), (c) => {
   return c.json(data);
 });
 
-estimate.put('/:id', zValidator('json', estimateSchema), (c) => {
+estimate.put('/:id', zValidator('json', estimateSchema), async (c) => {
   const request = c.req.valid('json');
-  const data = prisma.estimate.update({
+  const data = await prisma.estimate.update({
     where: {
       id: c.req.param('id'),
       version: request.version,
     },
     data: {
+      version: {
+        increment: 1,
+      },
       title: request.title,
       issueDate: request.issueDate,
       expires: request.expires,
