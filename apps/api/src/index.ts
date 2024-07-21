@@ -1,9 +1,9 @@
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
-import { estimate } from './routes';
+import { estimates } from './routes';
 
 const app = new Hono();
-const routes = app.route('/estimate', estimate);
+const routes = app.route('/estimates', estimates);
 const port = 4000;
 
 console.log(`API Server is running on port ${port}`);
