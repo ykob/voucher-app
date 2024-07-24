@@ -7,7 +7,6 @@
     "web": "pnpm -F \"web\"",
     "db": "pnpm -F \"db\"",
     "generate": "pnpm turbo run generate",
-    "migrate": "pnpm turbo run migrate --env-mode=loose",
     "build": "pnpm turbo run build",
     "dev": "pnpm turbo run dev",
     "lint": "pnpm turbo run lint"
