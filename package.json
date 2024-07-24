@@ -3,15 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "api": "pnpm -F \"api\"",
-    "web": "pnpm -F \"web\"",
-    "db": "pnpm -F \"db\"",
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint"
+    "turbo-run": "dotenv turbo run --",
+    "api": "pnpm turbo-run -F \"api\"",
+    "web": "pnpm turbo-run -F \"web\"",
+    "db": "pnpm turbo-run -F \"db\"",
+    "generate": "pnpm turbo-run generate",
+    "migrate": "pnpm turbo-run migrate --env-mode=loose",
+    "build": "pnpm turbo-run build",
+    "dev": "pnpm turbo-run dev",
+    "lint": "pnpm turbo-run lint"
   },
   "author": "Yoichi Kobayashi",
   "devDependencies": {
+    "dotenv-cli": "^7.4.2",
     "turbo": "^2.0.6"
   },
   "packageManager": "pnpm@9.4.0"

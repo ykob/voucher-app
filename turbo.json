@@ -1,18 +1,9 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [".env"],
   "tasks": {
-    "build": {
-      "outputs": ["dist/**"]
-    },
-    "db:generate": {
-      "cache": false
-    },
-    "db:push": {
-      "cache": false
-    },
-    "dev": {
-      "persistent": true,
-      "cache": false
-    }
+    "build": {},
+    "dev": {},
+    "generate": {}
   }
 }
