@@ -1,4 +1,5 @@
 import { zValidator } from '@hono/zod-validator';
+import bcryptjs from 'bcryptjs';
 import { Hono } from 'hono';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
@@ -56,4 +57,37 @@ const loginSchema = z.object({
 
 auth.post('/login', zValidator('json', loginSchema), async (c) => {
   const { email, password } = c.req.valid('json');
+
+  if (!email || !password) {
+    return c.json({ message: 'Email and password are required.' });
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (!user) {
+    return c.json({ message: 'Invalid email or password.' });
+  }
+
+  const validPassword = await bcryptjs.compare(password, user.password);
+
+  if (!validPassword) {
+    return c.json({ message: 'Invalid email or password.' });
+  }
+
+  const jti = uuidv4();
+  const { accessToken, refreshToken } = generateTokens(user.id, jti);
+
+  await prisma.refreshToken.create({
+    data: {
+      id: jti,
+      hashedToken: refreshToken,
+      userId: user.id,
+    },
+  });
+
+  return c.json({ accessToken, refreshToken });
 });
