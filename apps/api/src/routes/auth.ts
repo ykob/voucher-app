@@ -30,10 +30,14 @@ auth.post('/register', zValidator('json', registerSchema), async (c) => {
     return c.json({ message: 'Email already in use.' });
   }
 
+  const hashedPassword = await bcryptjs.hashSync(
+    password,
+    bcryptjs.genSaltSync(10),
+  );
   const user = await prisma.user.create({
     data: {
       email,
-      password,
+      password: hashedPassword,
     },
   });
   const jti = uuidv4();
