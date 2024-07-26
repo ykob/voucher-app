@@ -1,6 +1,7 @@
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
-import { auth, estimates } from './routes';
+import { auth } from './auth/routes';
+import { estimates } from './estimates/routes';
 
 const app = new Hono();
 const routes = app.route('/auth', auth).route('/estimates', estimates);

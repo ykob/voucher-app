@@ -1,6 +1,7 @@
 import { zValidator } from '@hono/zod-validator';
 import bcryptjs from 'bcryptjs';
 import { Hono } from 'hono';
+import { setCookie } from 'hono/cookie';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 import { prisma } from '~/prisma';
@@ -51,6 +52,9 @@ auth.post('/register', zValidator('json', registerSchema), async (c) => {
     },
   });
 
+  setCookie(c, 'accessToken', accessToken);
+  setCookie(c, 'refreshToken', refreshToken);
+
   return c.json({ accessToken, refreshToken });
 });
 
@@ -92,6 +96,8 @@ auth.post('/login', zValidator('json', loginSchema), async (c) => {
       userId: user.id,
     },
   });
+  setCookie(c, 'accessToken', accessToken);
+  setCookie(c, 'refreshToken', refreshToken);
 
   return c.json({ accessToken, refreshToken });
 });
