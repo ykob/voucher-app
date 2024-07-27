@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 import { prisma } from '~/prisma';
 import { generateTokens } from '~/utils/jwt';
+import { addRefreshTokenToWhitelist } from './services.js';
 
 export const auth = new Hono();
 
@@ -44,12 +45,10 @@ auth.post('/register', zValidator('json', registerSchema), async (c) => {
   const jti = uuidv4();
   const { accessToken, refreshToken } = generateTokens(user.id, jti);
 
-  await prisma.refreshToken.create({
-    data: {
-      id: jti,
-      hashedToken: refreshToken,
-      userId: user.id,
-    },
+  await addRefreshTokenToWhitelist({
+    jti,
+    refreshToken,
+    userId: user.id,
   });
 
   setCookie(c, 'accessToken', accessToken);
