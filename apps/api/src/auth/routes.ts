@@ -5,6 +5,10 @@ import { setCookie } from 'hono/cookie';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 import { prisma } from '~/prisma';
+import {
+  createUserByEmailAndPassword,
+  findUserByEmail,
+} from '~/users/services.js';
 import { generateTokens } from '~/utils/jwt';
 import { addRefreshTokenToWhitelist } from './services.js';
 
@@ -32,16 +36,7 @@ auth.post('/register', zValidator('json', registerSchema), async (c) => {
     return c.json({ message: 'Email already in use.' });
   }
 
-  const hashedPassword = await bcryptjs.hashSync(
-    password,
-    bcryptjs.genSaltSync(10),
-  );
-  const user = await prisma.user.create({
-    data: {
-      email,
-      password: hashedPassword,
-    },
-  });
+  const user = await createUserByEmailAndPassword(email, password);
   const jti = uuidv4();
   const { accessToken, refreshToken } = generateTokens(user.id, jti);
 
@@ -50,7 +45,6 @@ auth.post('/register', zValidator('json', registerSchema), async (c) => {
     refreshToken,
     userId: user.id,
   });
-
   setCookie(c, 'accessToken', accessToken);
   setCookie(c, 'refreshToken', refreshToken);
 
@@ -69,11 +63,7 @@ auth.post('/login', zValidator('json', loginSchema), async (c) => {
     return c.json({ message: 'Email and password are required.' });
   }
 
-  const user = await prisma.user.findUnique({
-    where: {
-      email,
-    },
-  });
+  const user = await findUserByEmail(email);
 
   if (!user) {
     return c.json({ message: 'Invalid email or password.' });
@@ -88,12 +78,10 @@ auth.post('/login', zValidator('json', loginSchema), async (c) => {
   const jti = uuidv4();
   const { accessToken, refreshToken } = generateTokens(user.id, jti);
 
-  await prisma.refreshToken.create({
-    data: {
-      id: jti,
-      hashedToken: refreshToken,
-      userId: user.id,
-    },
+  await addRefreshTokenToWhitelist({
+    jti,
+    refreshToken,
+    userId: user.id,
   });
   setCookie(c, 'accessToken', accessToken);
   setCookie(c, 'refreshToken', refreshToken);
