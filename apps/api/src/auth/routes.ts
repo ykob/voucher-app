@@ -2,15 +2,22 @@ import { zValidator } from '@hono/zod-validator';
 import bcryptjs from 'bcryptjs';
 import { Hono } from 'hono';
 import { setCookie } from 'hono/cookie';
+import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 import { prisma } from '~/prisma';
 import {
   createUserByEmailAndPassword,
   findUserByEmail,
+  findUserById,
 } from '~/users/services.js';
-import { generateTokens } from '~/utils/jwt';
-import { addRefreshTokenToWhitelist } from './services.js';
+import { hashToken } from '~/utils/hash-token.js';
+import { generateTokens } from '~/utils/jwt.js';
+import {
+  addRefreshTokenToWhitelist,
+  deleteRefreshToken,
+  findRefreshToken,
+} from './services.js';
 
 export const auth = new Hono();
 
@@ -88,3 +95,59 @@ auth.post('/login', zValidator('json', loginSchema), async (c) => {
 
   return c.json({ accessToken, refreshToken });
 });
+
+const refreshTokenSchema = z.object({
+  refreshToken: z.string(),
+});
+
+auth.post(
+  'refresh-token',
+  zValidator('json', refreshTokenSchema),
+  async (c) => {
+    const { refreshToken } = c.req.valid('json');
+
+    if (!refreshToken) {
+      throw new Error('Missing refresh token.');
+    }
+
+    const payload = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET!);
+
+    if (typeof payload === 'string' || payload.jti === undefined) {
+      throw new Error('Invalid refresh token.');
+    }
+
+    const savedRefreshToken = await findRefreshToken(payload.jti);
+
+    if (!savedRefreshToken || savedRefreshToken.revoked === true) {
+      throw new Error('Unauthorized.');
+    }
+
+    const hashedToken = hashToken(refreshToken);
+
+    if (hashedToken !== savedRefreshToken.hashedToken) {
+      throw new Error('Unauthorized.');
+    }
+
+    const user = await findUserById(payload.userId);
+
+    if (!user) {
+      throw new Error('Unauthorized.');
+    }
+
+    await deleteRefreshToken(savedRefreshToken.id);
+
+    const jti = uuidv4();
+    const { accessToken, refreshToken: newRefreshToken } = generateTokens(
+      user.id,
+      jti,
+    );
+
+    await addRefreshTokenToWhitelist({
+      jti,
+      refreshToken: newRefreshToken,
+      userId: user.id,
+    });
+
+    return c.json({ accessToken, refreshToken: newRefreshToken });
+  },
+);
