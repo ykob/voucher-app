@@ -17,6 +17,7 @@ import {
   addRefreshTokenToWhitelist,
   deleteRefreshToken,
   findRefreshToken,
+  revokeTokens,
 } from './services.js';
 
 export const auth = new Hono();
@@ -149,5 +150,19 @@ auth.post(
     });
 
     return c.json({ accessToken, refreshToken: newRefreshToken });
+  },
+);
+
+const revokeRefreshTokenSchema = z.object({
+  userId: z.string(),
+});
+
+auth.post(
+  '/revoke-refresh-token',
+  zValidator('json', revokeRefreshTokenSchema),
+  async (c) => {
+    const { userId } = c.req.valid('json');
+
+    await revokeTokens(userId);
   },
 );
