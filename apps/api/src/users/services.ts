@@ -1,12 +1,6 @@
 import bcryptjs from 'bcryptjs';
 import { prisma } from '~/prisma.js';
 
-export const findUsers = async () => {
-  const users = await prisma.user.findMany();
-
-  return users;
-};
-
 export const findUserById = async (id: string) => {
   const user = await prisma.user.findUnique({
     where: {
