@@ -5,6 +5,7 @@ import { setCookie } from 'hono/cookie';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
+import { logger } from '~/middlewares.js';
 import { prisma } from '~/prisma';
 import {
   createUserByEmailAndPassword,
@@ -26,6 +27,8 @@ const registerSchema = z.object({
   email: z.string(),
   password: z.string(),
 });
+
+auth.use(logger);
 
 auth.post('/register', zValidator('json', registerSchema), async (c) => {
   const { email, password } = c.req.valid('json');
