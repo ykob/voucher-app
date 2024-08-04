@@ -1,9 +1,13 @@
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { z } from 'zod';
+import { authenticate, logger } from '~/middlewares';
 import { prisma } from '~/prisma';
 
 export const estimates = new Hono();
+
+estimates.use(logger);
+estimates.use(authenticate);
 
 estimates.get('/', async (c) => {
   const data = await prisma.estimate.findMany();
