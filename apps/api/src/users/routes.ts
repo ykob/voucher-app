@@ -1,12 +1,15 @@
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { z } from 'zod';
+import { authenticate } from '~/middlewares';
 import { prisma } from '~/prisma';
 import { deleteUser } from './services';
 
-export const user = new Hono();
+export const users = new Hono();
 
-user.get('/:id', (c) => {
+users.use(authenticate);
+
+users.get('/:id', (c) => {
   return c.json(
     prisma.user.findUnique({
       where: {
@@ -20,7 +23,7 @@ const registerSchema = z.object({
   id: z.string(),
 });
 
-user.delete('/:id', zValidator('json', registerSchema), async (c) => {
+users.delete('/:id', zValidator('json', registerSchema), async (c) => {
   const { id } = c.req.valid('json');
   const user = await deleteUser(id);
 
