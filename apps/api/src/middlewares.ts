@@ -1,7 +1,7 @@
 import { createMiddleware } from 'hono/factory';
 import jwt from 'jsonwebtoken';
-import { prisma } from '~/prisma.js';
 import { env } from './env.js';
+import { findUserById } from './users/services.js';
 
 export const logger = createMiddleware(async (c, next) => {
   console.log(`[${c.req.method}] ${c.req.url}`);
@@ -16,16 +16,20 @@ export const authenticate = createMiddleware(async (c, next) => {
   }
 
   const token = authorization.split(' ')[1];
-  const decoded = jwt.verify(token, env.JWT_ACCESS_SECRET);
+  const payload = jwt.verify(token, env.JWT_ACCESS_SECRET);
 
-  const currentUser = await prisma.user.findUnique({
-    where: {
-      id: typeof decoded === 'string' ? decoded : decoded.user,
-    },
-  });
+  if (typeof payload === 'string') {
+    throw new Error('Invalid access token.');
+  }
 
-  c.set('currentUser', currentUser);
-  console.log(currentUser);
+  const user = await findUserById(payload.user);
+
+  if (!user) {
+    throw new Error('Unauthorized.');
+  }
+
+  c.set('currentUser', user);
+  console.log(user);
 
   await next();
 });
