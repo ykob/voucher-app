@@ -94,8 +94,6 @@ auth.post('/login', zValidator('json', loginSchema), async (c) => {
     refreshToken,
     userId: user.id,
   });
-  setCookie(c, 'accessToken', accessToken);
-  setCookie(c, 'refreshToken', refreshToken);
 
   return c.json({ accessToken, refreshToken });
 });
