@@ -7,19 +7,27 @@ export const loader = () => {
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const body = await request.formData();
-  const response = await fetch('http://localhost:4000/auth/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      email: body.get('email'),
-      password: body.get('password'),
-    }),
-  });
-  console.log(response);
 
-  return json(await response.json());
+  try {
+    const response = await fetch('http://localhost:4000/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: body.get('email'),
+        password: body.get('password'),
+      }),
+    });
+    const data = await response.json();
+
+    return json({
+      error: null,
+      data,
+    });
+  } catch (error) {
+    return json({ error: error.message, data: null });
+  }
 };
 
 export default () => {
