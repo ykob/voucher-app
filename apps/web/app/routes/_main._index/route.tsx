@@ -20,12 +20,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       }),
     });
     const data = await response.json();
+    console.log(`data`, data);
 
     return json({
       error: null,
       data,
     });
-  } catch (error) {
+  } catch (error: any) {
+    console.log(`error`, error);
     return json({ error: error.message, data: null });
   }
 };
@@ -48,7 +50,11 @@ export default () => {
         <button type="submit">Submit</button>
       </Form>
       <div>
-        {actionData ? <pre>{JSON.stringify(actionData, null, 2)}</pre> : null}
+        {actionData && actionData.error && (
+          <div>
+            <div>{actionData.error}</div>
+          </div>
+        )}
       </div>
     </div>
   );
