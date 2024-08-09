@@ -1,7 +1,6 @@
 import { zValidator } from '@hono/zod-validator';
 import bcryptjs from 'bcryptjs';
 import { Hono } from 'hono';
-import { setCookie } from 'hono/cookie';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
@@ -56,8 +55,6 @@ auth.post('/register', zValidator('json', registerSchema), async (c) => {
     refreshToken,
     userId: user.id,
   });
-  setCookie(c, 'accessToken', accessToken);
-  setCookie(c, 'refreshToken', refreshToken);
 
   return c.json({ accessToken, refreshToken });
 });
@@ -68,34 +65,38 @@ const loginSchema = z.object({
 });
 
 auth.post('/login', zValidator('json', loginSchema), async (c) => {
-  const { email, password } = c.req.valid('json');
+  try {
+    const { email, password } = c.req.valid('json');
 
-  if (!email || !password) {
-    return c.json({ message: 'Email and password are required.' });
+    if (!email || !password) {
+      throw new Error('Email and password are required.');
+    }
+
+    const user = await findUserByEmail(email);
+
+    if (!user) {
+      throw new Error('Invalid email or password.');
+    }
+
+    const validPassword = await bcryptjs.compare(password, user.password);
+
+    if (!validPassword) {
+      throw new Error('Invalid email or password.');
+    }
+
+    const jti = uuidv4();
+    const { accessToken, refreshToken } = generateTokens(user.id, jti);
+
+    await addRefreshTokenToWhitelist({
+      jti,
+      refreshToken,
+      userId: user.id,
+    });
+
+    return c.json({ success: true, data: { accessToken, refreshToken } });
+  } catch (error: any) {
+    return c.json({ success: false, data: { message: error.message } });
   }
-
-  const user = await findUserByEmail(email);
-
-  if (!user) {
-    return c.json({ message: 'Invalid email or password.' });
-  }
-
-  const validPassword = await bcryptjs.compare(password, user.password);
-
-  if (!validPassword) {
-    return c.json({ message: 'Invalid email or password.' });
-  }
-
-  const jti = uuidv4();
-  const { accessToken, refreshToken } = generateTokens(user.id, jti);
-
-  await addRefreshTokenToWhitelist({
-    jti,
-    refreshToken,
-    userId: user.id,
-  });
-
-  return c.json({ accessToken, refreshToken });
 });
 
 const refreshTokenSchema = z.object({

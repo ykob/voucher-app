@@ -19,16 +19,20 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         password: body.get('password'),
       }),
     });
-    const data = await response.json();
+    const { success, data } = await response.json();
     console.log(`data`, data);
 
-    return json({
-      error: null,
-      data,
-    });
+    return success
+      ? json({
+          error: null,
+          data,
+        })
+      : json({
+          error: data.message,
+          data: null,
+        });
   } catch (error: any) {
-    console.log(`error`, error);
-    return json({ error: error.message, data: null });
+    throw new Error(error.message);
   }
 };
 
