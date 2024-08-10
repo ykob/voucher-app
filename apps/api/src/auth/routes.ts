@@ -30,33 +30,37 @@ const registerSchema = z.object({
 auth.use(logger);
 
 auth.post('/register', zValidator('json', registerSchema), async (c) => {
-  const { email, password } = c.req.valid('json');
+  try {
+    const { email, password } = c.req.valid('json');
 
-  if (!email || !password) {
-    return c.json({ message: 'Email and password are required.' });
+    if (!email || !password) {
+      throw new Error('Email and password are required.');
+    }
+
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (existingUser) {
+      throw new Error('Email already in use.');
+    }
+
+    const user = await createUserByEmailAndPassword(email, password);
+    const jti = uuidv4();
+    const { accessToken, refreshToken } = generateTokens(user.id, jti);
+
+    await addRefreshTokenToWhitelist({
+      jti,
+      refreshToken,
+      userId: user.id,
+    });
+
+    return c.json({ success: true, data: { accessToken, refreshToken } });
+  } catch (error: any) {
+    return c.json({ success: false, data: { message: error.message } });
   }
-
-  const existingUser = await prisma.user.findUnique({
-    where: {
-      email,
-    },
-  });
-
-  if (existingUser) {
-    return c.json({ message: 'Email already in use.' });
-  }
-
-  const user = await createUserByEmailAndPassword(email, password);
-  const jti = uuidv4();
-  const { accessToken, refreshToken } = generateTokens(user.id, jti);
-
-  await addRefreshTokenToWhitelist({
-    jti,
-    refreshToken,
-    userId: user.id,
-  });
-
-  return c.json({ accessToken, refreshToken });
 });
 
 const loginSchema = z.object({
@@ -107,51 +111,57 @@ auth.post(
   'refresh-token',
   zValidator('json', refreshTokenSchema),
   async (c) => {
-    const { refreshToken } = c.req.valid('json');
+    try {
+      const { refreshToken } = c.req.valid('json');
 
-    if (!refreshToken) {
-      throw new Error('Missing refresh token.');
+      if (!refreshToken) {
+        throw new Error('Missing refresh token.');
+      }
+
+      const payload = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET!);
+
+      if (typeof payload === 'string' || payload.jti === undefined) {
+        throw new Error('Invalid refresh token.');
+      }
+
+      const savedRefreshToken = await findRefreshToken(payload.jti);
+
+      if (!savedRefreshToken || savedRefreshToken.revoked === true) {
+        throw new Error('Unauthorized.');
+      }
+
+      const hashedToken = hashToken(refreshToken);
+
+      if (hashedToken !== savedRefreshToken.hashedToken) {
+        throw new Error('Unauthorized.');
+      }
+
+      const user = await findUserById(payload.userId);
+
+      if (!user) {
+        throw new Error('Unauthorized.');
+      }
+
+      await deleteRefreshToken(savedRefreshToken.id);
+
+      const jti = uuidv4();
+      const { accessToken, refreshToken: newRefreshToken } = generateTokens(
+        user.id,
+        jti,
+      );
+
+      await addRefreshTokenToWhitelist({
+        jti,
+        refreshToken: newRefreshToken,
+        userId: user.id,
+      });
+      return c.json({
+        success: true,
+        data: { accessToken, refreshToken: newRefreshToken },
+      });
+    } catch (error: any) {
+      return c.json({ success: false, data: { message: error.message } });
     }
-
-    const payload = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET!);
-
-    if (typeof payload === 'string' || payload.jti === undefined) {
-      throw new Error('Invalid refresh token.');
-    }
-
-    const savedRefreshToken = await findRefreshToken(payload.jti);
-
-    if (!savedRefreshToken || savedRefreshToken.revoked === true) {
-      throw new Error('Unauthorized.');
-    }
-
-    const hashedToken = hashToken(refreshToken);
-
-    if (hashedToken !== savedRefreshToken.hashedToken) {
-      throw new Error('Unauthorized.');
-    }
-
-    const user = await findUserById(payload.userId);
-
-    if (!user) {
-      throw new Error('Unauthorized.');
-    }
-
-    await deleteRefreshToken(savedRefreshToken.id);
-
-    const jti = uuidv4();
-    const { accessToken, refreshToken: newRefreshToken } = generateTokens(
-      user.id,
-      jti,
-    );
-
-    await addRefreshTokenToWhitelist({
-      jti,
-      refreshToken: newRefreshToken,
-      userId: user.id,
-    });
-
-    return c.json({ accessToken, refreshToken: newRefreshToken });
   },
 );
 
@@ -163,8 +173,20 @@ auth.post(
   '/revoke-refresh-token',
   zValidator('json', revokeRefreshTokenSchema),
   async (c) => {
-    const { userId } = c.req.valid('json');
+    try {
+      const { userId } = c.req.valid('json');
 
-    await revokeTokens(userId);
+      await revokeTokens(userId);
+
+      return c.json({
+        success: true,
+        data: {},
+      });
+    } catch (error: any) {
+      return c.json({
+        success: false,
+        data: { message: error.message },
+      });
+    }
   },
 );
