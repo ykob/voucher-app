@@ -22,15 +22,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     const { success, data } = await response.json();
     console.log(`data`, data);
 
-    return success
-      ? json({
-          error: null,
-          data,
-        })
-      : json({
-          error: data.message,
-          data: null,
-        });
+    if (!success) {
+      return json({
+        error: data.message,
+        data: null,
+      });
+    }
   } catch (error: any) {
     throw new Error(error.message);
   }
