@@ -1,11 +1,13 @@
 import { json, ActionFunctionArgs } from '@remix-run/node';
 import { Form, useActionData } from '@remix-run/react';
+import { getSession } from '~/session';
 
 export const loader = () => {
   return json({});
 };
 
 export const action = async ({ request }: ActionFunctionArgs) => {
+  const session = await getSession(request.headers.get('Cookie'));
   const body = await request.formData();
 
   try {
@@ -20,14 +22,22 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       }),
     });
     const { success, data } = await response.json();
-    console.log(`data`, data);
 
     if (!success) {
+      session.flash('error', data.message);
       return json({
         error: data.message,
         data: null,
       });
     }
+
+    session.set('accessToken', data.accessToken);
+    session.set('refreshToken', data.refreshToken);
+
+    return json({
+      error: null,
+      data,
+    });
   } catch (error: any) {
     throw new Error(error.message);
   }
