@@ -9,14 +9,24 @@ export const users = new Hono();
 
 users.use(authenticate);
 
-users.get('/:id', (c) => {
-  return c.json(
-    prisma.user.findUnique({
+users.get('/:id', async (c) => {
+  try {
+    const user = await prisma.user.findUnique({
       where: {
         id: c.req.param('id'),
       },
-    }),
-  );
+    });
+
+    return c.json({
+      success: true,
+      data: user,
+    });
+  } catch (error: any) {
+    return c.json({
+      success: false,
+      error: error.message,
+    });
+  }
 });
 
 const registerSchema = z.object({
@@ -24,8 +34,18 @@ const registerSchema = z.object({
 });
 
 users.delete('/:id', zValidator('json', registerSchema), async (c) => {
-  const { id } = c.req.valid('json');
-  const user = await deleteUser(id);
+  try {
+    const { id } = c.req.valid('json');
+    const user = await deleteUser(id);
 
-  return c.json(user);
+    return c.json({
+      success: true,
+      data: user,
+    });
+  } catch (error: any) {
+    return c.json({
+      success: false,
+      error: error.message,
+    });
+  }
 });
