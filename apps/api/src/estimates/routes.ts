@@ -16,13 +16,23 @@ estimates.get('/', async (c) => {
 });
 
 estimates.get('/:id', async (c) => {
-  const data = await prisma.estimate.findUnique({
-    where: {
-      id: c.req.param('id'),
-    },
-  });
+  try {
+    const estimate = await prisma.estimate.findUnique({
+      where: {
+        id: c.req.param('id'),
+      },
+    });
 
-  return c.json(data);
+    return c.json({
+      success: true,
+      data: estimate,
+    });
+  } catch (error: any) {
+    return c.json({
+      success: false,
+      error: error.message,
+    });
+  }
 });
 
 const estimatesSchema = z.object({
@@ -38,48 +48,68 @@ const estimatesSchema = z.object({
 });
 
 estimates.post('/', zValidator('json', estimatesSchema), async (c) => {
-  const request = c.req.valid('json');
-  const data = await prisma.estimate.create({
-    data: {
-      userId: '',
-      title: request.title,
-      issueDate: request.issueDate,
-      expires: request.expires,
-      subtotal: request.subtotal,
-      taxAmount: request.taxAmount,
-      total: request.total,
-      // lines: [],
-      clientId: request.clientId,
-      staffId: request.staffId,
-    },
-  });
+  try {
+    const request = c.req.valid('json');
+    const estimate = await prisma.estimate.create({
+      data: {
+        userId: '',
+        title: request.title,
+        issueDate: request.issueDate,
+        expires: request.expires,
+        subtotal: request.subtotal,
+        taxAmount: request.taxAmount,
+        total: request.total,
+        // lines: [],
+        clientId: request.clientId,
+        staffId: request.staffId,
+      },
+    });
 
-  c.header('Content-type', 'application/json');
-  return c.json(data);
+    c.header('Content-type', 'application/json');
+    return c.json({
+      success: true,
+      data: estimate,
+    });
+  } catch (error: any) {
+    return c.json({
+      success: false,
+      error: error.message,
+    });
+  }
 });
 
 estimates.put('/:id', zValidator('json', estimatesSchema), async (c) => {
-  const request = c.req.valid('json');
-  const data = await prisma.estimate.update({
-    where: {
-      id: c.req.param('id'),
-      version: request.version,
-    },
-    data: {
-      version: {
-        increment: 1,
+  try {
+    const request = c.req.valid('json');
+    const estimate = await prisma.estimate.update({
+      where: {
+        id: c.req.param('id'),
+        version: request.version,
       },
-      title: request.title,
-      issueDate: request.issueDate,
-      expires: request.expires,
-      subtotal: request.subtotal,
-      taxAmount: request.taxAmount,
-      total: request.total,
-      clientId: request.clientId,
-      staffId: request.staffId,
-    },
-  });
+      data: {
+        version: {
+          increment: 1,
+        },
+        title: request.title,
+        issueDate: request.issueDate,
+        expires: request.expires,
+        subtotal: request.subtotal,
+        taxAmount: request.taxAmount,
+        total: request.total,
+        clientId: request.clientId,
+        staffId: request.staffId,
+      },
+    });
 
-  c.header('Content-type', 'application/json');
-  return c.json(data);
+    c.header('Content-type', 'application/json');
+    return c.json({
+      success: true,
+      data: estimate,
+    });
+  } catch (error: any) {
+    return c.json({
+      success: false,
+      error: error.message,
+    });
+  }
 });
