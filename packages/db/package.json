@@ -7,9 +7,9 @@
     "gui": "prisma studio"
   },
   "devDependencies": {
-    "prisma": "^5.16.1"
+    "prisma": "^5.18.0"
   },
   "dependencies": {
-    "@prisma/client": "^5.16.1"
+    "@prisma/client": "^5.18.0"
   }
 }
