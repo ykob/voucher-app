@@ -11,7 +11,7 @@ const styles = {
   container: css({
     px: 4,
     py: 2,
-    border: '1px solid',
+    border: '1px solid #ccc',
     borderRadius: 4,
   }),
 };

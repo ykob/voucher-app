@@ -1,5 +1,10 @@
 import { Links, Meta, Outlet, Scripts } from '@remix-run/react';
-import './index.css';
+import styles from "./index.css?url"
+import { type LinksFunction } from "@remix-run/node";
+
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: styles },
+];
 
 export default function App() {
   return (
