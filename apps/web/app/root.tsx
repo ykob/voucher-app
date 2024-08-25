@@ -1,10 +1,15 @@
-import { Links, Meta, Outlet, Scripts } from '@remix-run/react';
-import styles from "./index.css?url"
-import { type LinksFunction } from "@remix-run/node";
+import { type LinksFunction } from '@remix-run/node';
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+} from '@remix-run/react';
+import styles from './index.css?url';
 
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: styles },
-];
+export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
 
 export default function App() {
   return (
@@ -16,7 +21,9 @@ export default function App() {
       </head>
       <body>
         <Outlet />
+        <ScrollRestoration />
         <Scripts />
+        <LiveReload />
       </body>
     </html>
   );
