@@ -11,7 +11,6 @@ export default () => {
 
   return (
     <div>
-      <h1>Index</h1>
       <Form method="post">
         <div>
           <label htmlFor="email">email</label>
