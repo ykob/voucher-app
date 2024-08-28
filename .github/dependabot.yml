@@ -22,6 +22,10 @@ updates:
         patterns:
           - 'express*'
           - '@types/express'
+      hono:
+        patterns:
+          - 'hono*'
+          - '@hono/*'
       prettier:
         patterns:
           - 'prettier*'
@@ -39,7 +43,3 @@ updates:
         patterns:
           - 'remix*'
           - '@remix-run/*'
-      vite:
-        patterns:
-          - 'vite*'
-          - '@vitejs/*'
