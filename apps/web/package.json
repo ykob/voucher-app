@@ -10,16 +10,16 @@
   },
   "devDependencies": {
     "@pandacss/dev": "^0.41.0",
-    "@remix-run/dev": "^2.10.2",
+    "@remix-run/dev": "^2.11.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "eslint-config": "workspace:*",
     "vite": "^5.3.3"
   },
   "dependencies": {
-    "@remix-run/node": "^2.10.2",
-    "@remix-run/react": "^2.10.2",
-    "@remix-run/serve": "^2.10.2",
+    "@remix-run/node": "^2.11.2",
+    "@remix-run/react": "^2.11.2",
+    "@remix-run/serve": "^2.11.2",
     "isbot": "4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
