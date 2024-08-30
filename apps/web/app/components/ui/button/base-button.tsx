@@ -1,13 +1,23 @@
 import { ComponentProps } from 'react';
 import { css, cx } from 'styled-system/css';
+import { AsChildProps, Slot } from '~/components/utils/';
 
-type BaseButtonProps = ComponentProps<'button'>;
+type BaseButtonProps = AsChildProps<ComponentProps<'button'>> & {
+  className?: string;
+};
 
-export function BaseButton({ children, className, ...props }: BaseButtonProps) {
+export function BaseButton({
+  asChild,
+  children,
+  className,
+  ...props
+}: BaseButtonProps) {
+  const Component = asChild ? Slot : 'button';
+
   return (
-    <button className={cx(styles.container, className)} {...props}>
+    <Component className={cx(styles.container, className)} {...props}>
       {children}
-    </button>
+    </Component>
   );
 }
 
