@@ -9,7 +9,8 @@ export function InputField({ className, ...props }: InputFieldProps) {
 
 const styles = {
   container: css({
-    px: 4,
+    w: 'full',
+    px: 2,
     py: 1,
     border: '1px solid #333',
     borderRadius: 'md',

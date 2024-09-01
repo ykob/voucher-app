@@ -1,6 +1,6 @@
 import { Form, useActionData } from '@remix-run/react';
 
-import { InputField } from '~/components/ui/';
+import { FormItem, InputField } from '~/components/ui/';
 import { action } from './action';
 import { loader } from './loader';
 
@@ -12,14 +12,12 @@ export default () => {
   return (
     <div>
       <Form method="post">
-        <div>
-          <label htmlFor="email">email</label>
-          <InputField id="email" type="email" name="email" />
-        </div>
-        <div>
-          <label htmlFor="password">password</label>
-          <InputField id="password" type="password" name="password" />
-        </div>
+        <FormItem formId="email" label="メールアドレス">
+          <InputField type="email" name="email" />
+        </FormItem>
+        <FormItem formId="password" label="パスワード">
+          <InputField type="password" name="password" />
+        </FormItem>
         <button type="submit">Submit</button>
       </Form>
       <div>
