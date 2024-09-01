@@ -15,7 +15,11 @@ export function BaseButton({
   const Component = asChild ? Slot : 'button';
 
   return (
-    <Component className={cx(styles.container, className)} {...props}>
+    <Component
+      className={cx(styles.container, className)}
+      type="button"
+      {...props}
+    >
       {children}
     </Component>
   );

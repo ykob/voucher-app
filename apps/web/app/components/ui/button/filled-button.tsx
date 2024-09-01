@@ -2,18 +2,20 @@ import { ComponentProps } from 'react';
 import { css, cx } from 'styled-system/css';
 import { BaseButton } from './base-button';
 
-type FilledButtonProps = ComponentProps<typeof BaseButton> & {
-  className?: string;
-};
+type FilledButtonProps = ComponentProps<typeof BaseButton>;
 
 export function FilledButton({
-  asChild,
+  asChild = false,
   children,
   className,
   ...props
 }: FilledButtonProps) {
   return (
-    <BaseButton className={cx(styles.container, className)} {...props}>
+    <BaseButton
+      asChild={asChild}
+      className={cx(styles.container, className)}
+      {...props}
+    >
       {children}
     </BaseButton>
   );
