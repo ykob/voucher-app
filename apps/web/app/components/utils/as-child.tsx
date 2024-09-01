@@ -8,10 +8,10 @@ import {
 
 export type AsChildProps<T> =
   | ({
-      asChild: true;
+      asChild?: false;
     } & T)
   | {
-      asChild?: false;
+      asChild: true;
       children: ReactNode;
     };
 
