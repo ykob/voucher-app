@@ -18,7 +18,7 @@ export default () => {
         <FormItem formId="password" label="パスワード">
           <InputField type="password" name="password" />
         </FormItem>
-        <FilledButton>Submit</FilledButton>
+        <FilledButton>ログイン</FilledButton>
       </Form>
       <div>
         {actionData && actionData.error && (
