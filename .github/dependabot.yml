@@ -43,3 +43,7 @@ updates:
         patterns:
           - 'remix*'
           - '@remix-run/*'
+      storybook:
+        patterns:
+          - "storybook*"
+          - "@storybook/*"
