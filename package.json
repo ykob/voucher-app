@@ -9,7 +9,8 @@
     "generate": "pnpm turbo run generate",
     "build": "pnpm turbo run build",
     "dev": "pnpm turbo run dev",
-    "lint": "pnpm turbo run lint"
+    "lint": "pnpm turbo run lint",
+    "storybook": "pnpm -F \"storybook\" storybook"
   },
   "author": "Yoichi Kobayashi",
   "devDependencies": {
