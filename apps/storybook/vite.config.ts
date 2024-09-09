@@ -6,8 +6,8 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '~': `../web/app/`,
-      'styled-system': `../web/styled-system/`,
+      '~': `${__dirname}/../web/app/`,
+      'styled-system': `${__dirname}/../web/styled-system/`,
     },
   },
 });
