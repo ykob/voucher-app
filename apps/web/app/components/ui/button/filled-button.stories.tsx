@@ -12,7 +12,12 @@ type Story = StoryObj<typeof FilledButton>;
 export const FilledButtonStory: Story = {
   render: () => (
     <div>
-      <FilledButton>Click me</FilledButton>
+      <h1 className="story-heading">FilledButton Component</h1>
+      <div className="flex">
+        <FilledButton buttonSize="sm">Button</FilledButton>
+        <FilledButton buttonSize="md">Button</FilledButton>
+        <FilledButton buttonSize="lg">Button</FilledButton>
+      </div>
     </div>
   ),
 };

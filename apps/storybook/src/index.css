@@ -1,1 +1,11 @@
 @layer reset, base, tokens, recipes, utilities;
+
+h1.story-heading {
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+.flex {
+  display: flex;
+  gap: 1rem;
+}
