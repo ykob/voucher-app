@@ -1,5 +1,3 @@
-@layer reset, base, tokens, recipes, utilities;
-
 h1.story-heading {
   font-size: 2rem;
   font-weight: 500;
