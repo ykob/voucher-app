@@ -3,7 +3,7 @@ import { cva, cx } from 'styled-system/css';
 import { BaseButton } from './base-button';
 
 type FilledButtonProps = ComponentProps<typeof BaseButton> & {
-  buttonColor?: 'primary' | 'secondary' | 'negative';
+  buttonColor?: 'primary' | 'secondary' | 'danger';
 };
 
 export function FilledButton({
@@ -29,18 +29,18 @@ export function FilledButton({
 const styles = {
   container: cva({
     base: {
-      color: 'white',
+      color: 'text.interactive',
     },
     variants: {
       buttonColor: {
         primary: {
-          bg: 'blue.800',
+          bg: 'bg.interactive.primary',
         },
         secondary: {
-          bg: 'gray.800',
+          bg: 'bg.interactive.secondary',
         },
-        negative: {
-          bg: 'negative',
+        danger: {
+          bg: 'bg.interactive.danger',
         },
       },
     },
