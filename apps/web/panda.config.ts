@@ -1,5 +1,5 @@
 import { defineConfig } from '@pandacss/dev';
-import { semanticTokens } from './pandacss/semantic-tokens';
+import { theme } from './pandacss/theme';
 
 export default defineConfig({
   // Whether to use css reset
@@ -15,11 +15,7 @@ export default defineConfig({
   exclude: [],
 
   // Useful for theme customization
-  theme: {
-    extend: {
-      semanticTokens,
-    },
-  },
+  theme,
 
   // The output directory for your css system
   outdir: 'styled-system',
