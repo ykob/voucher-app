@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@pandacss/dev": "^0.41.0",
+    "@pandacss/types": "^0.46.0",
     "@remix-run/dev": "^2.11.2",
     "@storybook/react": "^8.2.9",
     "@types/react": "^18.3.3",

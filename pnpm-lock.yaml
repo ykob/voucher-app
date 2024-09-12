@@ -161,6 +161,9 @@ importers:
       '@pandacss/dev':
         specifier: ^0.41.0
         version: 0.41.0(typescript@5.5.4)
+      '@pandacss/types':
+        specifier: ^0.46.0
+        version: 0.46.0
       '@remix-run/dev':
         specifier: ^2.11.2
         version: 2.11.2(@remix-run/react@2.11.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.4))(@remix-run/serve@2.11.2(typescript@5.5.4))(@types/node@20.14.10)(lightningcss@1.23.0)(typescript@5.5.4)(vite@5.3.3(@types/node@20.14.10)(lightningcss@1.23.0))
@@ -204,6 +207,8 @@ importers:
       typescript-eslint:
         specifier: ^8.1.0
         version: 8.1.0(eslint@9.9.0)(typescript@5.5.4)
+
+  packages/pandacss: {}
 
 packages:
 
@@ -1539,6 +1544,9 @@ packages:
 
   '@pandacss/types@0.41.0':
     resolution: {integrity: sha512-WGFxRozTK+6lQOk1nPfJ1H/5wJyT0mm68rIMNX8dtDAbessPdKZAz0orgIJ9INijbdPRtFUWlDTrJ4F0MgD2dA==}
+
+  '@pandacss/types@0.46.0':
+    resolution: {integrity: sha512-OFp5lGeJ50Kv5hg3zYwNsp0EcZLPItCp/CgYkbdKcfZAjvnEFNgWItRXAKwu1M+1Z0TL6yEz9pvkvWKEyMmJMg==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -6920,6 +6928,8 @@ snapshots:
       ts-pattern: 5.0.8
 
   '@pandacss/types@0.41.0': {}
+
+  '@pandacss/types@0.46.0': {}
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
