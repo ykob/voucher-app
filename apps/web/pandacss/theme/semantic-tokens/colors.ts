@@ -3,7 +3,9 @@ const colors = {
     value: {
       body: '{colors.neutral.800}',
       subtle: '{colors.neutral.600}',
+      link: '{colors.blue.600}',
       interactive: '{colors.neutral.100}',
+      disabled: '{colors.neutral.400}',
     },
   },
   bg: {
@@ -31,6 +33,17 @@ const colors = {
       success: '{colors.green.500}',
       warning: '{colors.yellow.500}',
       danger: '{colors.red.500}',
+    },
+  },
+  input: {
+    value: {
+      text: '{colors.neutral.800}',
+      bg: '{colors.neutral.200}',
+      border: '{colors.neutral.500}',
+      danger: {
+        bg: '{colors.red.100}',
+        border: '{colors.red.500}',
+      },
     },
   },
 };
