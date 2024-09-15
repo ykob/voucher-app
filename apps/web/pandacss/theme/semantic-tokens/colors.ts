@@ -1,49 +1,59 @@
 const colors = {
   text: {
-    value: {
-      body: '{colors.neutral.800}',
-      subtle: '{colors.neutral.600}',
-      link: '{colors.blue.600}',
-      interactive: '{colors.neutral.100}',
-      disabled: '{colors.neutral.400}',
-    },
+    body: { value: '{colors.neutral.800}' },
+    subtle: { value: '{colors.neutral.600}' },
+    link: { value: '{colors.blue.600}' },
+    interactive: { value: '{colors.neutral.100}' },
+    disabled: { value: '{colors.neutral.400}' },
   },
   bg: {
-    value: {
-      neutral: '{colors.neutral.100}',
-      primary: '{colors.blue.100}',
-      success: '{colors.green.100}',
-      warning: '{colors.yellow.100}',
-      danger: '{colors.red.100}',
-    },
+    neutral: { value: '{colors.neutral.100}' },
+    primary: { value: '{colors.blue.100}' },
+    success: { value: '{colors.green.100}' },
+    warning: { value: '{colors.yellow.100}' },
+    danger: { value: '{colors.red.100}' },
     interactive: {
-      value: {
-        primary: '{colors.blue.600}',
-        secondary: '{colors.neutral.600}',
-        success: '{colors.green.600}',
-        warning: '{colors.yellow.600}',
-        danger: '{colors.red.600}',
+      primary: {
+        DEFAULT: { value: '{colors.blue.600}' },
+        hover: { value: '{colors.blue.700}' },
+        active: { value: '{colors.blue.800}' },
+      },
+      secondary: {
+        DEFAULT: { value: '{colors.neutral.600}' },
+        hover: { value: '{colors.neutral.700}' },
+        active: { value: '{colors.neutral.800}' },
+      },
+      success: {
+        DEFAULT: { value: '{colors.green.600}' },
+        hover: { value: '{colors.green.700}' },
+        active: { value: '{colors.green.800}' },
+      },
+      warning: {
+        DEFAULT: { value: '{colors.yellow.600}' },
+        hover: { value: '{colors.yellow.700}' },
+        active: { value: '{colors.yellow.800}' },
+      },
+      danger: {
+        DEFAULT: { value: '{colors.red.600}' },
+        hover: { value: '{colors.red.700}' },
+        active: { value: '{colors.red.800}' },
       },
     },
   },
   border: {
-    value: {
-      neutral: '{colors.neutral.500}',
-      primary: '{colors.blue.500}',
-      success: '{colors.green.500}',
-      warning: '{colors.yellow.500}',
-      danger: '{colors.red.500}',
-    },
+    neutral: { value: '{colors.neutral.500}' },
+    primary: { value: '{colors.blue.500}' },
+    success: { value: '{colors.green.500}' },
+    warning: { value: '{colors.yellow.500}' },
+    danger: { value: '{colors.red.500}' },
   },
   input: {
-    value: {
-      text: '{colors.neutral.800}',
-      bg: '{colors.neutral.200}',
-      border: '{colors.neutral.500}',
-      danger: {
-        bg: '{colors.red.100}',
-        border: '{colors.red.500}',
-      },
+    text: { value: '{colors.neutral.800}' },
+    bg: { value: '{colors.neutral.200}' },
+    border: { value: '{colors.neutral.500}' },
+    danger: {
+      bg: { value: '{colors.red.100}' },
+      border: { value: '{colors.red.500}' },
     },
   },
 };

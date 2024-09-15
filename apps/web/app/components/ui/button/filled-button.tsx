@@ -29,12 +29,20 @@ export function FilledButton({
 const styles = {
   container: cva({
     base: {
+      cursor: 'pointer',
       color: 'text.interactive',
+      transition: 'background-color 0.2s',
     },
     variants: {
       buttonColor: {
         primary: {
-          bg: 'bg.interactive.primary',
+          bgColor: 'bg.interactive.primary',
+          _hover: {
+            bg: 'bg.interactive.primary.hover',
+          },
+          _active: {
+            bg: 'bg.interactive.primary.active',
+          },
         },
         secondary: {
           bg: 'bg.interactive.secondary',
