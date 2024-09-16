@@ -31,26 +31,29 @@ export function BaseButton({
 const styles = {
   container: cva({
     base: {
+      boxSizing: 'border-box',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      rounded: 'md',
+      fontWeight: 'medium',
     },
     variants: {
       buttonSize: {
         sm: {
           h: 8,
-          px: 2,
-          rounded: 'sm',
+          px: 3,
+          fontSize: 'sm',
         },
         md: {
           h: 10,
           px: 4,
-          rounded: 'md',
+          fontSize: 'md',
         },
         lg: {
           h: 12,
-          px: 6,
-          rounded: 'lg',
+          px: 5,
+          fontSize: 'lg',
         },
       },
     },

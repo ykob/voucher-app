@@ -3,7 +3,7 @@ import { cva, cx } from 'styled-system/css';
 import { BaseButton } from './base-button';
 
 type FilledButtonProps = ComponentProps<typeof BaseButton> & {
-  buttonColor?: 'primary' | 'secondary' | 'danger';
+  buttonColor?: 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
 };
 
 export function FilledButton({
@@ -46,9 +46,39 @@ const styles = {
         },
         secondary: {
           bg: 'bg.interactive.secondary',
+          _hover: {
+            bg: 'bg.interactive.secondary.hover',
+          },
+          _active: {
+            bg: 'bg.interactive.secondary.active',
+          },
+        },
+        success: {
+          bg: 'bg.interactive.success',
+          _hover: {
+            bg: 'bg.interactive.success.hover',
+          },
+          _active: {
+            bg: 'bg.interactive.success.active',
+          },
+        },
+        warning: {
+          bg: 'bg.interactive.warning',
+          _hover: {
+            bg: 'bg.interactive.warning.hover',
+          },
+          _active: {
+            bg: 'bg.interactive.warning.active',
+          },
         },
         danger: {
           bg: 'bg.interactive.danger',
+          _hover: {
+            bg: 'bg.interactive.danger.hover',
+          },
+          _active: {
+            bg: 'bg.interactive.danger.active',
+          },
         },
       },
     },
