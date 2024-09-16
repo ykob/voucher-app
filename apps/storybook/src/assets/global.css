@@ -1,9 +1,19 @@
-h1.story-heading {
-  font-size: 2rem;
+.story-heading {
   font-weight: 500;
-  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
 }
-.flex {
+.story-heading:first-child {
+  margin-top: 0;
+}
+h1.story-heading {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+h2.story-heading {
+  font-size: 1.4rem;
+}
+.story-flex {
   display: flex;
   gap: 1rem;
 }
