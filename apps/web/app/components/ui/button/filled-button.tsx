@@ -29,8 +29,8 @@ export function FilledButton({
 const styles = {
   container: cva({
     base: {
-      cursor: 'pointer',
       color: 'text.interactive',
+      fontWeight: 'bold',
       transition: 'background-color 0.2s',
     },
     variants: {
@@ -38,46 +38,46 @@ const styles = {
         primary: {
           bgColor: 'bg.interactive.primary',
           _hover: {
-            bg: 'bg.interactive.primary.hover',
+            bgColor: 'bg.interactive.primary.hover',
           },
           _active: {
-            bg: 'bg.interactive.primary.active',
+            bgColor: 'bg.interactive.primary.active',
           },
         },
         secondary: {
-          bg: 'bg.interactive.secondary',
+          bgColor: 'bg.interactive.secondary',
           _hover: {
-            bg: 'bg.interactive.secondary.hover',
+            bgColor: 'bg.interactive.secondary.hover',
           },
           _active: {
-            bg: 'bg.interactive.secondary.active',
+            bgColor: 'bg.interactive.secondary.active',
           },
         },
         success: {
-          bg: 'bg.interactive.success',
+          bgColor: 'bg.interactive.success',
           _hover: {
-            bg: 'bg.interactive.success.hover',
+            bgColor: 'bg.interactive.success.hover',
           },
           _active: {
-            bg: 'bg.interactive.success.active',
+            bgColor: 'bg.interactive.success.active',
           },
         },
         warning: {
-          bg: 'bg.interactive.warning',
+          bgColor: 'bg.interactive.warning',
           _hover: {
-            bg: 'bg.interactive.warning.hover',
+            bgColor: 'bg.interactive.warning.hover',
           },
           _active: {
-            bg: 'bg.interactive.warning.active',
+            bgColor: 'bg.interactive.warning.active',
           },
         },
         danger: {
-          bg: 'bg.interactive.danger',
+          bgColor: 'bg.interactive.danger',
           _hover: {
-            bg: 'bg.interactive.danger.hover',
+            bgColor: 'bg.interactive.danger.hover',
           },
           _active: {
-            bg: 'bg.interactive.danger.active',
+            bgColor: 'bg.interactive.danger.active',
           },
         },
       },

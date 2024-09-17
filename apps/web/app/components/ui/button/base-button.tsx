@@ -31,6 +31,7 @@ export function BaseButton({
 const styles = {
   container: cva({
     base: {
+      cursor: 'pointer',
       boxSizing: 'border-box',
       display: 'flex',
       alignItems: 'center',
