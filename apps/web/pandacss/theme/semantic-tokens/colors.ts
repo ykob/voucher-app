@@ -19,9 +19,9 @@ const colors = {
         active: { value: '{colors.blue.800}' },
       },
       secondary: {
-        DEFAULT: { value: '{colors.neutral.600}' },
-        hover: { value: '{colors.neutral.700}' },
-        active: { value: '{colors.neutral.800}' },
+        DEFAULT: { value: '{colors.neutral.700}' },
+        hover: { value: '{colors.neutral.800}' },
+        active: { value: '{colors.neutral.900}' },
       },
       success: {
         DEFAULT: { value: '{colors.green.600}' },
