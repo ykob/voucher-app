@@ -6,16 +6,22 @@ const textStyleBase = {
 };
 
 export const heading: TextStyles = {
+  lg: {
+    value: {
+      ...textStyleBase,
+      fontSize: '3xl',
+    },
+  },
   md: {
     value: {
       ...textStyleBase,
-      fontSize: 'md',
+      fontSize: 'xl',
     },
   },
   sm: {
     value: {
       ...textStyleBase,
-      fontSize: 'sm',
+      fontSize: 'lg',
     },
   },
 };

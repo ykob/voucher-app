@@ -27,7 +27,7 @@ const styles = {
     },
   }),
   heading: css({
-    fontSize: '3xl',
+    textStyle: 'heading.lg',
     mb: 4,
   }),
 };
