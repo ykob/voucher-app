@@ -9,6 +9,7 @@ export default defineConfig({
   include: [
     '../web/app/routes/**/*.{ts,tsx,js,jsx}',
     '../web/app/components/**/*.{ts,tsx,js,jsx}',
+    './src/**/*.stories.{ts,tsx,js,jsx}',
   ],
 
   // Files to exclude
