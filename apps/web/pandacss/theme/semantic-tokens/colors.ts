@@ -1,4 +1,6 @@
-const colors = {
+import { type Recursive, type SemanticToken } from '@pandacss/types';
+
+const colors: Recursive<SemanticToken<string, string>> = {
   text: {
     body: { value: '{colors.neutral.800}' },
     subtle: { value: '{colors.neutral.600}' },
