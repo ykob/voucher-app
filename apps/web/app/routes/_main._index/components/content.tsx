@@ -1,8 +1,10 @@
+import { SerializeFrom } from '@remix-run/node';
 import { Form } from '@remix-run/react';
 import { FilledButton, FormItem, InputField } from '~/components/ui/';
+import { action } from '../action';
 
 type ContentProps = {
-  actionData: any;
+  actionData: SerializeFrom<typeof action>;
 };
 
 export function Content({ actionData }: ContentProps) {
