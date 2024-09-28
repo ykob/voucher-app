@@ -9,7 +9,7 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
-    "@pandacss/dev": "^0.41.0",
+    "@pandacss/dev": "^0.46.1",
     "@pandacss/types": "^0.46.0",
     "@remix-run/dev": "^2.11.2",
     "@storybook/react": "^8.2.9",
