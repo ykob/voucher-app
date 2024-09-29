@@ -1,7 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { ComponentProps } from 'react';
-import { css, cx } from '../../../styled-system/css';
+import { colors } from '../../../../web/pandacss/theme/semantic-tokens/colors';
+import { css } from '../../../styled-system/css';
 import { flex } from '../../../styled-system/patterns';
+import { type Token, token } from '../../../styled-system/tokens';
 
 const meta: Meta = {
   title: 'Primary/Semantic Tokens/Colors',
@@ -9,17 +11,15 @@ const meta: Meta = {
 
 export default meta;
 
-const ColorBlock = ({ children, className }: ComponentProps<'div'>) => (
+const ColorBlock = ({ children, ...props }: ComponentProps<'div'>) => (
   <div
-    className={cx(
-      css({
-        width: '200px',
-        height: '60px',
-        boxSizing: 'border-box',
-        px: 2,
-      }),
-      className,
-    )}
+    className={css({
+      width: '200px',
+      height: '60px',
+      boxSizing: 'border-box',
+      px: 2,
+    })}
+    {...props}
   >
     {children}
   </div>
@@ -30,17 +30,29 @@ export const HeadingTextStyleStory: StoryObj = {
   render: () => (
     <div className={flex({ direction: 'column', gap: 4 })}>
       <h1 className={css({ textStyle: 'heading.primary' })}>Color Tokens</h1>
-      <div className={flex({ direction: 'column', gap: 4 })}>
-        <h2 className={css({ textStyle: 'heading.secondary' })}>Text Colors</h2>
-        <div className={flex({ gap: 1 })}>
-          <ColorBlock className={css({ bgColor: 'text.body' })}>
-            text.body
-          </ColorBlock>
-          <ColorBlock className={css({ bgColor: 'text.subtle' })}>
-            text.subtle
-          </ColorBlock>
+      {Object.entries(colors).map(([key1, value1]) => (
+        <div key={key1} className={flex({ direction: 'column', gap: 4 })}>
+          <h2 className={css({ textStyle: 'heading.secondary' })}>{key1}</h2>
+          <div className={flex({ gap: 1 })}>
+            {Object.entries(value1).map(([key2, value2]) => {
+              if (value2.value) {
+                const colorToken = `colors.${key1}.${key2}` as Token;
+
+                return (
+                  <ColorBlock
+                    key={`${key1}.${key2}`}
+                    style={{
+                      backgroundColor: token.var(colorToken),
+                    }}
+                  >
+                    {key1}.{key2}
+                  </ColorBlock>
+                );
+              }
+            })}
+          </div>
         </div>
-      </div>
+      ))}
     </div>
   ),
 };
