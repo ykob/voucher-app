@@ -21,7 +21,14 @@ const ColorBlock = ({ children, ...props }: ComponentProps<'div'>) => (
     })}
     {...props}
   >
-    {children}
+    <div
+      className={css({
+        color: 'white',
+        mixBlendMode: 'difference',
+      })}
+    >
+      {children}
+    </div>
   </div>
 );
 
