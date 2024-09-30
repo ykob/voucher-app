@@ -14,10 +14,9 @@ export default meta;
 const ColorBlock = ({ children, ...props }: ComponentProps<'div'>) => (
   <div
     className={css({
-      width: '200px',
-      height: '60px',
+      width: '100%',
       boxSizing: 'border-box',
-      px: 2,
+      p: 2,
     })}
     {...props}
   >
@@ -35,12 +34,12 @@ const ColorBlock = ({ children, ...props }: ComponentProps<'div'>) => (
 export const HeadingTextStyleStory: StoryObj = {
   name: 'Colors',
   render: () => (
-    <div className={flex({ direction: 'column', gap: 4 })}>
+    <div className={flex({ direction: 'column', gap: 8 })}>
       <h1 className={css({ textStyle: 'heading.primary' })}>Color Tokens</h1>
       {Object.entries(colors).map(([key1, value1]) => (
         <div key={key1} className={flex({ direction: 'column', gap: 4 })}>
           <h2 className={css({ textStyle: 'heading.secondary' })}>{key1}</h2>
-          <div className={flex({ gap: 1 })}>
+          <div>
             {Object.entries(value1).map(([key2, value2]) => {
               if (value2.value) {
                 const colorToken = `colors.${key1}.${key2}` as Token;
@@ -56,6 +55,35 @@ export const HeadingTextStyleStory: StoryObj = {
                   </ColorBlock>
                 );
               }
+              return (
+                <div
+                  key={`${key1}.${key2}`}
+                  className={flex({ direction: 'column', gap: 4 })}
+                >
+                  <h2
+                    className={css({ textStyle: 'heading.secondary', mt: 8 })}
+                  >
+                    {key1}.{key2}
+                  </h2>
+                  <div>
+                    {Object.entries(value2).map(([key3]) => {
+                      const colorToken =
+                        `colors.${key1}.${key2}.${key3}` as Token;
+
+                      return (
+                        <ColorBlock
+                          key={`${key1}.${key2}.${key3}`}
+                          style={{
+                            backgroundColor: token.var(colorToken),
+                          }}
+                        >
+                          {key1}.{key2}.{key3}
+                        </ColorBlock>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
             })}
           </div>
         </div>
