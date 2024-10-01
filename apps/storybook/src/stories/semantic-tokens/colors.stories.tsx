@@ -22,8 +22,7 @@ const ColorBlock = ({ children, ...props }: ComponentProps<'div'>) => (
   >
     <div
       className={css({
-        color: 'white',
-        mixBlendMode: 'difference',
+        filter: 'invert(1) contrast(10)',
       })}
     >
       {children}
@@ -48,6 +47,7 @@ export const HeadingTextStyleStory: StoryObj = {
                   <ColorBlock
                     key={`${key1}.${key2}`}
                     style={{
+                      color: token.var(colorToken),
                       backgroundColor: token.var(colorToken),
                     }}
                   >
@@ -74,6 +74,7 @@ export const HeadingTextStyleStory: StoryObj = {
                         <ColorBlock
                           key={`${key1}.${key2}.${key3}`}
                           style={{
+                            color: token.var(colorToken),
                             backgroundColor: token.var(colorToken),
                           }}
                         >
