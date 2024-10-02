@@ -3,6 +3,7 @@ import { css, cx } from 'styled-system/css';
 import { Slot } from '~/components/utils';
 
 type FormItemProps = ComponentProps<'div'> & {
+  error?: string;
   formId: string;
   label: string;
 };
@@ -10,6 +11,7 @@ type FormItemProps = ComponentProps<'div'> & {
 export function FormItem({
   children,
   className,
+  error,
   formId,
   label,
   ...props
@@ -22,6 +24,11 @@ export function FormItem({
       <div className={styles.input}>
         <Slot id={formId}>{children}</Slot>
       </div>
+      {error && (
+        <div className={styles.error} role="alert">
+          {error}
+        </div>
+      )}
     </div>
   );
 }
@@ -35,9 +42,13 @@ const styles = {
   }),
   label: css({
     display: 'block',
-    fontSize: 'sm',
+    textStyle: 'body.secondary',
   }),
   input: css({
     w: 'full',
+  }),
+  error: css({
+    textStyle: 'body.secondary',
+    color: 'text.danger',
   }),
 };
