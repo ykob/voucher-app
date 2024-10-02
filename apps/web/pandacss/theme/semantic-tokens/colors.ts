@@ -7,6 +7,9 @@ const colors: Recursive<SemanticToken<string, string>> = {
     link: { value: '{colors.blue.600}' },
     interactive: { value: '{colors.neutral.100}' },
     disabled: { value: '{colors.neutral.400}' },
+    success: { value: '{colors.green.600}' },
+    warning: { value: '{colors.yellow.600}' },
+    danger: { value: '{colors.red.600}' },
   },
   bg: {
     neutral: { value: '{colors.neutral.100}' },
