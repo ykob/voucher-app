@@ -13,7 +13,7 @@
     "@pandacss/types": "^0.46.0",
     "@remix-run/dev": "^2.11.2",
     "@storybook/react": "^8.2.9",
-    "@types/react": "^18.3.3",
+    "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "eslint-config": "workspace:*",
     "vite": "^5.3.3"
