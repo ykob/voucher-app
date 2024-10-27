@@ -1,6 +1,5 @@
 import { ComponentProps } from 'react';
-import { cx } from 'styled-system/css';
-import { cva } from 'styled-system/css/cva.mjs';
+import { cva, cx } from 'styled-system/css';
 import { AsChildProps, Slot } from '~/components/utils/';
 
 type BaseButtonProps = AsChildProps<ComponentProps<'button'>> & {
