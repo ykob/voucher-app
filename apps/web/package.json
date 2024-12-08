@@ -11,9 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@remix-run/express": "^2.15.0",
     "@remix-run/node": "^2.15.0",
     "@remix-run/react": "^2.15.0",
-    "@remix-run/serve": "^2.15.0",
+    "cross-env": "^7.0.3",
+    "express": "^4.21.2",
     "isbot": "4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
