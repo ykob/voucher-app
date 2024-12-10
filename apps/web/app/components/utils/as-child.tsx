@@ -24,7 +24,7 @@ export function Slot({
   if (isValidElement(children)) {
     return cloneElement(children, {
       ...props,
-      ...children.props,
+      ...(children.props ?? {}),
     });
   }
   if (Children.count(children) > 1) {
